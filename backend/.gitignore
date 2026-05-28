@@ -1,0 +1,14 @@
+# Backend-local ignores (the repo-root .gitignore only covers *.log / db.sqlite3)
+.venv/
+venv/
+
+# Generated logs (JSONL, one file per service per day)
+logs/
+
+# Ingested / downloaded data
+data/raw/
+data/images/
+data/pokemon_stats.db
+
+# Local env
+.env
