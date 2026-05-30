@@ -3,5 +3,6 @@ uvicorn[standard]>=0.29
 httpx>=0.27
 python-dotenv>=1.0
 pydantic>=2.6
+pydantic-settings>=2.2
 # tzdata guarantees the America/Lima zone resolves even on minimal installs
 tzdata>=2024.1
