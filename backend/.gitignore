@@ -12,3 +12,6 @@ data/pokemon_stats.db
 
 # Local env
 .env
+
+# Background run artifacts (start_all.sh)
+.run/

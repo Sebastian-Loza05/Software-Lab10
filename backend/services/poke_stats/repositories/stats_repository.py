@@ -1,3 +1,4 @@
+from commons.latency import latency_block
 from poke_stats.db.client import query
 
 _COLUMNS = (
@@ -7,8 +8,9 @@ _COLUMNS = (
 
 
 async def get_by_name(name: str) -> dict | None:
-    rows = await query(
-        f"SELECT {_COLUMNS} FROM pokemon_stats WHERE name = ?",
-        [name.lower()],
-    )
+    with latency_block("stats_db_query"):
+        rows = await query(
+            f"SELECT {_COLUMNS} FROM pokemon_stats WHERE name = ?",
+            [name.lower()],
+        )
     return rows[0] if rows else None
