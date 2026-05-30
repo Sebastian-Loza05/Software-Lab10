@@ -1,4 +1,4 @@
-from poke_api.db.client import query
+from poke_stats.db.client import query
 
 
 async def check_connection() -> bool:

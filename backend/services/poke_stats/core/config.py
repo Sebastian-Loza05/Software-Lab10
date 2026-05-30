@@ -11,7 +11,12 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    pokeapi_base_url: str = "https://pokeapi.co/api/v2"
+    turso_database_url: str
+    turso_auth_token: str
+
+    @property
+    def turso_pipeline_url(self) -> str:
+        return self.turso_database_url.rstrip("/") + "/v2/pipeline"
 
 
 settings = Settings()
