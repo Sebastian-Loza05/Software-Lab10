@@ -360,27 +360,3 @@ Top failing API:    /poke/search (2874 5xx)
 ```
 
 ![Stats SearchApi](docs/img/stats_searchapi.png)
-
----
-
-## Manejo de errores
-
-- **Módulo desconocido** → el bot termina con código 2 y mensaje claro:
-
-  ```bash
-  $ python -m bot CheckAvailability PokeFoo --last 1d
-  error: Unknown module 'PokeFoo'. Valid modules: poke-api, poke-stats, poke-images, search-api
-  ```
-
-- **Rango inválido** (`--from` posterior a `--to`) → exit code 2 con mensaje explicativo.
-- **Día sin archivo de log** → se omite en silencio; aparece como `N/A` para `CheckAvailability` y `CheckLatency`, y simplemente no contribuye a `Stats` o `RenderGraph`.
-
----
-
-## Ayuda integrada
-
-```bash
-python -m bot --help                       # listado de comandos
-python -m bot CheckAvailability --help     # opciones del comando
-python -m bot Stats --help
-```
