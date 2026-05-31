@@ -12,17 +12,9 @@ El bot no requiere instalación adicional — solo el `.venv` del proyecto (Fast
 
 ```bash
 cd backend
-source ../.venv/bin/activate      # opcional, para usar `python` en vez del path completo
+source ../.venv/bin/activate
 python -m bot --help
 ```
-
-Atajo recomendado (alias permanente en `~/.zshrc` o `~/.bashrc`):
-
-```bash
-alias bot='cd /home/luisd/UTEC/ciclo_10/arquitectura/semana10/Software-Lab10/backend && /home/luisd/UTEC/ciclo_10/arquitectura/semana10/Software-Lab10/.venv/bin/python -m bot'
-```
-
-Con eso, todos los ejemplos de abajo se pueden invocar como `bot <Comando> ...` desde cualquier directorio.
 
 ---
 
