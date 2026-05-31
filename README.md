@@ -197,7 +197,7 @@ python -m bot CheckLatency <Módulo> [opciones de tiempo]
 
 ### `RenderGraph`
 
-Renderiza un gráfico de líneas ASCII (~12 filas de alto) con la tendencia diaria de disponibilidad o latencia. Las etiquetas del eje X son verticales (se leen de arriba a abajo: cada columna es un día `DD/MM`).
+Renderiza un gráfico de dispersión ASCII (~12 filas de alto) con un punto (`•`) por día. El eje Y se normaliza al rango `[min, max]` de los valores medidos; el eje X tiene las fechas centradas debajo de cada columna; debajo de las fechas aparece el valor exacto de cada punto (sin unidad — la unidad está en el título).
 
 **Sintaxis**:
 
@@ -213,24 +213,21 @@ python -m bot RenderGraph <Módulo> [--metric availability|latency] [opciones de
 
 ```
 poke-api - latencia (ms)
- 9183.5┤•     
-       │·     
-       │·     
-       │··•   
-       │·· ·  
-       │·· ·  
- 6987.6┤·· ·• 
-       │ · • ·
-       │ ·   ·
-       │ ·   •
-       │ ·    
- 5991.6┤ •    
-       └──────
-        222223
-        567890
-        //////
-        000000
-        555555
+ 9184.3┤   •
+       │
+       │         •
+       │
+       │                     •
+       │
+ 7587.9┤                                 •
+       │
+       │
+       │
+       │                           •
+ 5991.5┤               •
+       └────────────────────────────────────
+         25/05 26/05 27/05 28/05 29/05 30/05
+         9184  8599  5992  8120  6396  7520
 ```
 
 ![RenderGraph PokeApi latency](docs/img/render_graph_pokeapi_latency.png)
@@ -239,24 +236,21 @@ poke-api - latencia (ms)
 
 ```
 poke-stats - disponibilidad (%)
-   65.3┤      
-       │      
-       │      
-       │      
-       │      
-       │••••••
-   62.2┤      
-       │      
-       │      
-       │      
-       │      
-   59.1┤      
-       └──────
-        222223
-        567890
-        //////
-        000000
-        555555
+   65.3┤
+       │
+       │
+       │
+       │
+       │   •     •     •     •     •     •
+   62.2┤
+       │
+       │
+       │
+       │
+   59.1┤
+       └────────────────────────────────────
+         25/05 26/05 27/05 28/05 29/05 30/05
+         62.2  62.2  62.2  62.2  62.2  62.2
 ```
 
 ![RenderGraph PokeStats availability](docs/img/render_graph_pokestats_availability.png)
@@ -265,24 +259,21 @@ poke-stats - disponibilidad (%)
 
 ```
 poke-images - latencia (ms)
-   16.0┤    • 
-       │   ·· 
-       │   ·· 
-       │•  ·• 
-       │·  ·  
-       │·• ·  
-   13.5┤··•·  
-       │·· ·  
-       │·· ·  
-       │ · ·  
-       │ · ·  
-   11.0┤ · •  
-       └──────
-        222223
-        567890
-        //////
-        000000
-        555555
+   15.8┤                           •
+       │                     •
+       │   •
+       │
+       │                                 •
+       │
+   13.3┤         •
+       │
+       │
+       │
+       │
+   10.7┤               •
+       └────────────────────────────────────
+         25/05 26/05 27/05 28/05 29/05 30/05
+          15    13    11    15    16    14
 ```
 
 ![RenderGraph PokeImages latency](docs/img/render_graph_pokeimages_latency.png)
@@ -291,24 +282,21 @@ poke-images - latencia (ms)
 
 ```
 search-api - latencia (ms)
-18074.7┤   •• 
-       │ • · ·
-       │ ··· ·
-       │ ··· ·
-       │ ··· ·
-       │ ··· ·
-14317.4┤ ··· •
-       │ ·•   
-       │ ·    
-       │ ·    
-       │ ·    
-10560.1┤•     
-       └──────
-        222223
-        567890
-        //////
-        000000
-        555555
+18074.7┤                     •     •
+       │         •
+       │
+       │
+       │
+       │
+14317.4┤                                 •
+       │               •
+       │
+       │
+       │
+10560.1┤   •
+       └────────────────────────────────────
+         25/05 26/05 27/05 28/05 29/05 30/05
+         10560 17220 13004 18075 17767 13907
 ```
 
 ![RenderGraph SearchApi latency](docs/img/render_graph_searchapi_latency.png)

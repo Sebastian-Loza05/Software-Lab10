@@ -1,10 +1,16 @@
-"""Tiny ASCII line chart, no external deps."""
+"""Tiny ASCII scatter chart (one dot per data point), no external deps."""
 
 HEIGHT = 12
+COL_WIDTH = 6  # chars per data-point column — leaves room for a horizontal DD/MM label
 LABEL_WIDTH = 8
 
 
-def render_line(labels: list[str], values: list[float | None], ylabel: str = "") -> str:
+def render_line(
+    labels: list[str],
+    values: list[float | None],
+    ylabel: str = "",
+    value_labels: list[str] | None = None,
+) -> str:
     clean = [v for v in values if v is not None]
     if not clean:
         return "(no data)"
@@ -20,18 +26,15 @@ def render_line(labels: list[str], values: list[float | None], ylabel: str = "")
             return -1
         return round((v - vmin) / span * (HEIGHT - 1))
 
-    rows = [row_for(v) for v in values]
-    width = len(values)
-    grid = [[" "] * width for _ in range(HEIGHT)]
-    for i, r in enumerate(rows):
+    n = len(values)
+    chart_width = n * COL_WIDTH
+    grid = [[" "] * chart_width for _ in range(HEIGHT)]
+    for i, v in enumerate(values):
+        r = row_for(v)
         if r < 0:
             continue
-        if i > 0 and rows[i - 1] >= 0:
-            lo, hi = sorted((rows[i - 1], r))
-            for rr in range(lo + 1, hi):
-                if grid[HEIGHT - 1 - rr][i] == " ":
-                    grid[HEIGHT - 1 - rr][i] = "·"
-        grid[HEIGHT - 1 - r][i] = "•"
+        col = i * COL_WIDTH + COL_WIDTH // 2
+        grid[HEIGHT - 1 - r][col] = "•"
 
     out: list[str] = []
     if ylabel:
@@ -46,20 +49,23 @@ def render_line(labels: list[str], values: list[float | None], ylabel: str = "")
         else:
             prefix = " " * (LABEL_WIDTH - 1) + "│"
         out.append(prefix + "".join(row))
-    out.append(" " * (LABEL_WIDTH - 1) + "└" + "─" * width)
+    out.append(" " * (LABEL_WIDTH - 1) + "└" + "─" * chart_width)
 
     if labels:
-        out.append(_x_axis_labels(labels, width))
+        out.append(_centered_row(labels, chart_width))
+    if value_labels:
+        out.append(_centered_row(value_labels, chart_width))
     return "\n".join(out)
 
 
-def _x_axis_labels(labels: list[str], width: int) -> str:
-    """One char per row per column, read top-down. Avoids overlap on narrow charts."""
-    max_len = max(len(l) for l in labels)
-    rows: list[str] = []
-    for k in range(max_len):
-        row = " " * LABEL_WIDTH
-        for lbl in labels:
-            row += lbl[k] if k < len(lbl) else " "
-        rows.append(row)
-    return "\n".join(rows)
+def _centered_row(items: list[str], chart_width: int) -> str:
+    """One label per data column, centered in its COL_WIDTH slot."""
+    line = [" "] * (LABEL_WIDTH + chart_width)
+    for i, txt in enumerate(items):
+        col_center = LABEL_WIDTH + i * COL_WIDTH + COL_WIDTH // 2
+        start = col_center - len(txt) // 2
+        for j, ch in enumerate(txt):
+            pos = start + j
+            if 0 <= pos < len(line):
+                line[pos] = ch
+    return "".join(line).rstrip()

@@ -12,10 +12,13 @@ def run(args) -> int:
     if args.metric == "latency":
         series = check_latency.compute(module, days)
         ylabel = f"{module} - latencia (ms)"
+        fmt = lambda v: "—" if v is None else f"{v:.0f}"
     else:
         series = check_availability.compute(module, days)
         ylabel = f"{module} - disponibilidad (%)"
+        fmt = lambda v: "—" if v is None else f"{v:.1f}"
     labels = [d.strftime("%d/%m") for d, _ in series]
     values = [v for _, v in series]
-    print(render_line(labels, values, ylabel=ylabel))
+    value_labels = [fmt(v) for v in values]
+    print(render_line(labels, values, ylabel=ylabel, value_labels=value_labels))
     return 0
