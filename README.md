@@ -12,17 +12,9 @@ El bot no requiere instalación adicional — solo el `.venv` del proyecto (Fast
 
 ```bash
 cd backend
-source ../.venv/bin/activate      # opcional, para usar `python` en vez del path completo
+source ../.venv/bin/activate
 python -m bot --help
 ```
-
-Atajo recomendado (alias permanente en `~/.zshrc` o `~/.bashrc`):
-
-```bash
-alias bot='cd /home/luisd/UTEC/ciclo_10/arquitectura/semana10/Software-Lab10/backend && /home/luisd/UTEC/ciclo_10/arquitectura/semana10/Software-Lab10/.venv/bin/python -m bot'
-```
-
-Con eso, todos los ejemplos de abajo se pueden invocar como `bot <Comando> ...` desde cualquier directorio.
 
 ---
 
@@ -368,27 +360,3 @@ Top failing API:    /poke/search (2874 5xx)
 ```
 
 ![Stats SearchApi](docs/img/stats_searchapi.png)
-
----
-
-## Manejo de errores
-
-- **Módulo desconocido** → el bot termina con código 2 y mensaje claro:
-
-  ```bash
-  $ python -m bot CheckAvailability PokeFoo --last 1d
-  error: Unknown module 'PokeFoo'. Valid modules: poke-api, poke-stats, poke-images, search-api
-  ```
-
-- **Rango inválido** (`--from` posterior a `--to`) → exit code 2 con mensaje explicativo.
-- **Día sin archivo de log** → se omite en silencio; aparece como `N/A` para `CheckAvailability` y `CheckLatency`, y simplemente no contribuye a `Stats` o `RenderGraph`.
-
----
-
-## Ayuda integrada
-
-```bash
-python -m bot --help                       # listado de comandos
-python -m bot CheckAvailability --help     # opciones del comando
-python -m bot Stats --help
-```
